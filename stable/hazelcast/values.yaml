@@ -215,7 +215,7 @@ securityContext:
 
 # Allows to enable a Prometheus to scrape pods, implemented for Hazelcast version >= 3.12 (or 'latest')
 metrics:
-  enabled: false
+  enabled: true
   service:
     type: ClusterIP
     port: 8080

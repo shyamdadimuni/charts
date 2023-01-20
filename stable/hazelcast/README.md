@@ -1,3 +1,65 @@
+# Adding Istio to name space
+1. Download Istioclt
+2. Add Istioctl to path
+3. Install Istio using Istioctl
+4. Verify istio install using `kubectl get pods -n istio-system`
+5. Add `kubectl label namespace default istio-injection=enabled` to inject istio to `default` namespace (or set your namespce)
+6. Install your helm chart to above namespace
+7. Istio will inject sidecar proxy to each pod
+
+# Install local chart
+From parent directory `charts\stable`, run following to install local helm chart.
+```shell
+ helm upgrade --install ssl1 hazelcast/ --values hazelcast/values.yaml
+```
+ssl1 is the name for deployment
+
+# Upgrade (apply new changes) to existing deployment
+```shell
+helm upgrade  ssl1 hazelcast/ --values hazelcast/values.yaml
+```
+
+# Delete Helm chart
+
+```shell
+helm delete ssl1
+```
+
+# Istio mTLS 
+Istio needs to configure to use `STRICT` mode, so that it will only use mutual TLS for communication.
+REF: 
+1. https://istio.io/latest/docs/tasks/security/authentication/mtls-migration/
+2. https://istio.io/latest/docs/concepts/security/#mutual-tls-authentication
+
+Added `istio-peer-mtls.yaml` to Helm chart to configure Istio to use `STRICT` mode in the cluster.
+
+## Istio addon
+    There are several addon supported for istio. Check `istio-1.16.1\samples\addon\` for full list
+# Visualization using Kiali
+Go to addon and install kiali, prometheus and grafana
+```shell
+kubectl apply -f prometheus.yaml 
+kubectl apply -f grafana.yaml
+kubectl apply -f kiali.yaml 
+
+```
+verify install using;
+`kubectl get pods -n istio-system`
+
+Check addon services created successfully using;
+`kubectl get svc -n istio-system`
+
+View kiali dashboard
+`istioctl dashboard kiali`
+
+Kiali looking for both `app` and `app.kubernetes.io/name` labels to identify applications
+
+To view grafana dashboard use 
+`istioctl dashboard grafana`
+and visit: http://localhost:3000/d/G8wLrJIZk/istio-mesh-dashboard?orgId=1&refresh=5s
+
+Ref: https://istio.io/latest/docs/tasks/observability/metrics/using-istio-dashboard/
+
 # Hazelcast
 
 [Hazelcast](https://hazelcast.com/open-source-projects/) is a distributed computation and storage platform for consistently low-latency querying, aggregation and stateful computation against event streams and traditional data sources. It allows you to quickly build resource-efficient, real-time applications. You can deploy it at any scale from small edge devices to a large cluster of cloud instances.

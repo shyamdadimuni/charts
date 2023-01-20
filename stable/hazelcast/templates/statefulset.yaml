@@ -4,6 +4,8 @@ kind: StatefulSet
 metadata:
   name: {{ template "hazelcast.fullname" . }}
   labels:
+    app: {{ template "hazelcast.name" . }}
+    version: "1.0"
     app.kubernetes.io/name: {{ template "hazelcast.name" . }}
     helm.sh/chart: {{ template "hazelcast.chart" . }}
     app.kubernetes.io/instance: "{{ .Release.Name }}"
@@ -28,6 +30,7 @@ spec:
   template:
     metadata:
       labels:
+        app: {{ template "hazelcast.name" . }}
         app.kubernetes.io/name: {{ template "hazelcast.name" . }}
         helm.sh/chart: {{ template "hazelcast.chart" . }}
         app.kubernetes.io/instance: "{{ .Release.Name }}"
