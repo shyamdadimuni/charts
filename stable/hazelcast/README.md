@@ -1,7 +1,7 @@
 # Adding Istio to name space
 1. Download Istioclt : https://istio.io/latest/docs/setup/install/istioctl/
 2. Add Istioctl to path
-3. Install Istio using Istioctl
+3. Install Istio using Istioctl `istioctl install`
 4. Verify istio install using `kubectl get pods -n istio-system`
 5. Add `kubectl label namespace default istio-injection=enabled` to inject istio to `default` namespace (or set your namespce)
 6. Install your helm chart to above namespace
