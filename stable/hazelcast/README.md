@@ -1,5 +1,5 @@
 # Adding Istio to name space
-1. Download Istioclt
+1. Download Istioclt : https://istio.io/latest/docs/setup/install/istioctl/
 2. Add Istioctl to path
 3. Install Istio using Istioctl
 4. Verify istio install using `kubectl get pods -n istio-system`
